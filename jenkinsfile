@@ -1,0 +1,47 @@
+#!groovy
+
+import groovy.json.JsonSlurperClassic
+
+node {
+
+der BUILD NULBER-env.BUILD NUMBER
+def RUN_ARTIFACT_DIR="tests/$(BUILD_NUMBER)"
+det SFDC_USERNAME
+def HUB_ORG=env.HUB ORG DH
+def SFDC HOST - env. SFDC_HOST_DH
+def JWT_KEY_CRED_ID - env.JWT_CRED_ID_DH
+def CONNECTED APP CONSUMER KEY=env.CONNECTED APP CONSUMER KEY DH
+println KEY IS
+println JWT_KEY_CRED_ID
+println HUB ORG
+printin SFDC_HOST
+println CONNECTED_APP_CONSUMER_KEY
+def toolbelt = tool 'toolbelt'
+stage ('checkout source)
+// when running in multi-branch job, one must issue this command
+checkout som
+}
+withcredentials([file (credentialsid: JWT_KEY_CRED_ID, variable: 'jwt_key_file'])!
+stage ('Deploye Code') {
+if (isUnix()) !
+rc - sh returnStatus: true, script: "${toolbelt) force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY) --username $ [HUB_ORG) --jut keyfile $ijwt_key_file) --setdefaultdevhubusername --instanceurl
+S(SFDC HOST)"
+Jelse
+rc = bat returnStatus: true, script:"\"$[toolbelt)\" force:auth: jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY) --username $(HUB_ORG) --jut keyfile \"${jwt_key_file)\" --setdefaultdevhubusername
+--instanceurl S(SFDC_HOST]"
+if (rc != 0) { error 'hub org authorization failed')
+= )
+printin rc
+/ need to pull out assigned username
+if (isUnix() !
+rmsg - sh returnstdout: true, script: "${toolbelt) force: mdapi:deploy -d manifest/. - $ (HUB_ORG)"
+Jelse
+rmsg = bat returnstdout: true, script: "\"$[toolbelt)\" force:mdapi:deploy -d manifest/. -u $(HUB_ORG)"
+)
+printf msg
+println('Hello from a Job DSL script!'
+println(rmsg)
+}
+}
+}
+
