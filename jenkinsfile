@@ -5,7 +5,7 @@ import groovy.json.JsonSlurperClassic
 node {
 
 def BUILD_NULBER=env.BUILD_NUMBER
-def RUN_ARTIFACT_DIR="tests/$(BUILD_NUMBER)"
+  def RUN_ARTIFACT_DIR="tests/${BUILD_NUMBER}"
 def SFDC_USERNAME
 
 def HUB_ORG=env.HUB ORG DH
@@ -31,11 +31,11 @@ checkout scm
 withcredentials([file (credentialsId: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]){
 stage ('Deploye Code') {
 if (isUnix()) {
-rc = sh returnStatus: true, script: "${toolbelt) force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY) --username $ [HUB_ORG) --jwt keyfile $ijwt_key_file) --setdefaultdevhubusername --instanceurl
+rc = sh returnStatus: true, script: "${toolbelt) force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username $ [HUB_ORG) --jwt keyfile $ijwt_key_file) --setdefaultdevhubusername --instanceurl
 $(SFDC_HOST)"
 }
 else {
-rc = bat returnStatus: true, script:"\"$[toolbelt)\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY) --username $(HUB_ORG) --jwt keyfile \"${jwt_key_file)\" --setdefaultdevhubusername
+rc = bat returnStatus: true, script:"\"$[toolbelt)\" force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY} --username $(HUB_ORG) --jwt keyfile \"${jwt_key_file)\" --setdefaultdevhubusername
 --instanceurl $(SFDC_HOST]" }
 if (rc != 0) { error 'hub org authorization failed')
 
@@ -44,7 +44,7 @@ printin rc
 // need to pull out assigned username
 
 if (isUnix()){
-rmsg = sh returnstdout: true, script: "${toolbelt) force: mdapi:deploy -d manifest/. -u $ (HUB_ORG)"
+  rmsg = sh returnstdout: true, script: "${toolbelt} force: mdapi:deploy -d manifest/. -u $ (HUB_ORG)"
 } else{
 rmsg = bat returnstdout: true, script: "\"$[toolbelt)\" force:mdapi:deploy -d manifest/. -u $(HUB_ORG)"
 }
