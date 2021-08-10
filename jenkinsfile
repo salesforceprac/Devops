@@ -17,29 +17,30 @@ println HUB ORG
 printin SFDC_HOST
 println CONNECTED_APP_CONSUMER_KEY
 def toolbelt = tool 'toolbelt'
-stage ('checkout source)
+stage ('checkout source) {
 // when running in multi-branch job, one must issue this command
 checkout som
 }
-withcredentials([file (credentialsid: JWT_KEY_CRED_ID, variable: 'jwt_key_file'])!
+withcredentials([file (credentialsid: JWT_KEY_CRED_ID, variable: 'jwt_key_file')]) {
 stage ('Deploye Code') {
-if (isUnix()) !
+if (isUnix()) {
 rc - sh returnStatus: true, script: "${toolbelt) force:auth:jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY) --username $ [HUB_ORG) --jut keyfile $ijwt_key_file) --setdefaultdevhubusername --instanceurl
 S(SFDC HOST)"
-Jelse
+}
+else {
 rc = bat returnStatus: true, script:"\"$[toolbelt)\" force:auth: jwt:grant --clientid ${CONNECTED_APP_CONSUMER_KEY) --username $(HUB_ORG) --jut keyfile \"${jwt_key_file)\" --setdefaultdevhubusername
---instanceurl S(SFDC_HOST]"
+--instanceurl S(SFDC_HOST]" }
 if (rc != 0) { error 'hub org authorization failed')
-= )
+
 printin rc
-/ need to pull out assigned username
-if (isUnix() !
+// need to pull out assigned username
+if (isUnix()){
 rmsg - sh returnstdout: true, script: "${toolbelt) force: mdapi:deploy -d manifest/. - $ (HUB_ORG)"
-Jelse
+} else {
 rmsg = bat returnstdout: true, script: "\"$[toolbelt)\" force:mdapi:deploy -d manifest/. -u $(HUB_ORG)"
 )
 printf msg
-println('Hello from a Job DSL script!'
+println('Hello from a Job DSL script!')
 println(rmsg)
 }
 }
