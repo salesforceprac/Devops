@@ -47,9 +47,9 @@ if (isUnix()){
 rmsg = sh returnstdout: true, script: "${toolbelt) force: mdapi:deploy -d manifest/. -u $ (HUB_ORG)"
 } else{
 rmsg = bat returnstdout: true, script: "\"$[toolbelt)\" force:mdapi:deploy -d manifest/. -u $(HUB_ORG)"
-)
+}
 printf msg
-println('Hello from a Job DSL script!'
+println('Hello from a Job DSL script!')
 println(rmsg)
 }
 }
