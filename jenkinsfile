@@ -4,9 +4,9 @@ import groovy.json.JsonSlurperClassic
 
 node {
 
-der BUILD_NULBER=env.BUILD NUMBER
+def BUILD_NULBER=env.BUILD NUMBER
 def RUN_ARTIFACT_DIR="tests/$(BUILD_NUMBER)"
-det SFDC_USERNAME
+def SFDC_USERNAME
 
 def HUB_ORG=env.HUB ORG DH
 def SFDC HOST = env. SFDC_HOST_DH
