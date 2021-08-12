@@ -47,15 +47,15 @@ node {
 			
 			// need to pull out assigned username
 			if (isUnix()) {
-				println 'inside inner if starting'
+				//println 'inside inner if starting'
 				//rmsg = sh returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 				rmsg = sh returnStdout: true, script: "${toolbelt} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-				println 'inside inner if'
+				//println 'inside inner if'
 			}else{
-				println 'inside inner else starting'
+				//println 'inside inner else starting'
 				
 				rmsg = bat returnStdout: true, script: "${toolbelt} ${path1} force:source:deploy -x manifest/package.xml -u ${HUB_ORG}"
-				println 'inside inner else'
+				//println 'inside inner else'
 			   //rmsg = bat returnStdout: true, script: "${toolbelt} force:mdapi:deploy -d manifest/. -u ${HUB_ORG}"
 			}
 			  
